@@ -1,6 +1,6 @@
 # RL2025Lawless: An Actor-Critic Reinforcement Learning Framework for Variant Evidence Interpretation
 
-**TL;DR:** We use an actor–critic reinforcement learning method that uses genomic metrics (e.g., the GuRu score, variant/gene risk priors, and population frequency) to learn and estimate the probability of observing disease-associated variants by updating weights via the TD error \(\delta(t)=r(t)+\gamma\,p(t)-p(t-1)\), thereby integrating cumulative evidence in a Bayesian context rather than directly predicting pathogenicity.
+**TL;DR:** We use an actor–critic reinforcement learning method that uses genomic metrics (e.g., the GuRu score, variant/gene risk priors, and population frequency) to learn and estimate the probability of observing disease-associated variants by updating weights via the TD error $\delta(t)=r(t)+\gamma\,p(t)-p(t-1)$, thereby integrating cumulative evidence in a Bayesian context rather than directly predicting pathogenicity.
 
 ## Overview
 
@@ -8,9 +8,9 @@ This project implements a reinforcement learning (RL) framework designed to esti
 
 For an introduction into this topic see:
 
-* **THIS ONE IF YOU HAVE LOTS OF TIME** Reinforcement Learning: An Introduction. Richard S. Sutton and Andrew G. Barto, Second Edition MIT Press, Cambridge, MA, 2018. <http://incompleteideas.net/book/RLbook2020.pdf#page=78>
+* **THIS ONE IF YOU HAVE LOTS OF TIME:** Reinforcement Learning: An Introduction. Richard S. Sutton and Andrew G. Barto, Second Edition MIT Press, Cambridge, MA, 2018. <http://incompleteideas.net/book/RLbook2020.pdf#page=78>
 * A. G. Barto, R. S. Sutton and C. W. Anderson, "Neuronlike adaptive elements that can solve difficult learning control problems," in IEEE Transactions on Systems, Man, and Cybernetics, vol. SMC-13, no. 5, pp. 834-846, Sept.-Oct. 1983, doi: 10.1109/TSMC.1983.6313077 <https://ieeexplore.ieee.org/document/6313077>
-* **THIS ONE IF YOU HAVE NO TIME** A. G. Barto, R. S. Sutton and C. W. Anderson, "Looking Back on the Actor–Critic Architecture," in IEEE Transactions on Systems, Man, and Cybernetics: Systems, vol. 51, no. 1, pp. 40-50, Jan. 2021, doi: 10.1109/TSMC.2020.3041775 <https://ieeexplore.ieee.org/document/9306925>.
+* **THIS ONE IF YOU HAVE NO TIME:** A. G. Barto, R. S. Sutton and C. W. Anderson, "Looking Back on the Actor–Critic Architecture," in IEEE Transactions on Systems, Man, and Cybernetics: Systems, vol. 51, no. 1, pp. 40-50, Jan. 2021, doi: 10.1109/TSMC.2020.3041775 <https://ieeexplore.ieee.org/document/9306925>.
 * An example of Classic Control environments can be [read on gymnasium](https://gymnasium.farama.org/environments/classic_control/cart_pole/), the Python-based API standard for reinforcement which came out of OpenAI's Gym.
 
 <table>
