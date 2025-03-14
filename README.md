@@ -7,7 +7,8 @@ This project implements a reinforcement learning (RL) framework designed to esti
 For an introduction into this topic see:
 
 * Reinforcement Learning: An Introduction. Richard S. Sutton and Andrew G. Barto, Second Edition MIT Press, Cambridge, MA, 2018. <http://incompleteideas.net/book/RLbook2020.pdf#page=78>
-* A. G. Barto, R. S. Sutton and C. W. Anderson, "Neuronlike adaptive elements that can solve difficult learning control problems," in IEEE Transactions on Systems, Man, and Cybernetics, vol. SMC-13, no. 5, pp. 834-846, Sept.-Oct. 1983, doi: 10.1109/TSMC.1983.6313077.
+* A. G. Barto, R. S. Sutton and C. W. Anderson, "Neuronlike adaptive elements that can solve difficult learning control problems," in IEEE Transactions on Systems, Man, and Cybernetics, vol. SMC-13, no. 5, pp. 834-846, Sept.-Oct. 1983, doi: 10.1109/TSMC.1983.6313077 <https://ieeexplore.ieee.org/document/6313077>
+* A. G. Barto, R. S. Sutton and C. W. Anderson, "Looking Back on the Actor–Critic Architecture," in IEEE Transactions on Systems, Man, and Cybernetics: Systems, vol. 51, no. 1, pp. 40-50, Jan. 2021, doi: 10.1109/TSMC.2020.3041775 <https://ieeexplore.ieee.org/document/9306925>.
 * An example of Classic Control environments can be [read on gymnasium](https://gymnasium.farama.org/environments/classic_control/cart_pole/), the Python-based API standard for reinforcement which came out of OpenAI's Gym.
 
 <table>
@@ -18,6 +19,10 @@ For an introduction into this topic see:
 </table>
 
 <img src="figures/gif_genetic_rl_scatter_pact.gif" style="width: 100%;" alt="Example of increasing prediction over time with genetic features population frequency and GuRu score"/>
+
+<img src="https://ieeexplore.ieee.org/mediastore/IEEE/content/media/6221021/9321226/9306925/barto1-3041775-small.gif" style="width: 100%;" alt="Example of increasing prediction over time with genetic features population frequency and GuRu score"/>
+The learning system consists of a single associative search element (ASE) and a single adaptive critic element (ACE).
+**Figure:** Barto, et al. 2020. ASE and ACE configured for pole-balancing task. ACE receives same nonreinforcing input as ASE and uses it to compute an improved or internal reinforcement signal to be used by ASE.
 
 
 ## Key Features
@@ -41,4 +46,11 @@ For an introduction into this topic see:
 3. **Manuscript Preparation:** LaTeX source files in the `latex/` directory are used to compile the final manuscript PDF.
 
 
+## Further background summary
 
+Important key ideas are found in this paper:
+> A. G. Barto, R. S. Sutton and C. W. Anderson, "Neuronlike adaptive elements that can solve difficult learning control problems," in IEEE Transactions on Systems, Man, and Cybernetics, vol. SMC-13, no. 5, pp. 834-846, Sept.-Oct. 1983, doi: 10.1109/TSMC.1983.6313077.
+
+TL;DR: In this article, a system consisting of two neuron-like adaptive elements can solve a difficult learning control problem, where the task is to balance a pole that is hinged to a movable cart by applying forces to the cart base.
+
+Abstract: It is shown how a system consisting of two neuronlike adaptive elements can solve a difficult learning control problem. The task is to balance a pole that is hinged to a movable cart by applying forces to the cart's base. It is argued that the learning problems faced by adaptive elements that are components of adaptive networks are at least as difficult as this version of the pole-balancing problem. The learning system consists of a single associative search element (ASE) and a single adaptive critic element (ACE). In the course of learning to balance the pole, the ASE constructs associations between input and output by searching under the influence of reinforcement feedback, and the ACE constructs a more informative evaluation function than reinforcement feedback alone can provide. The differences between this approach and other attempts to solve problems using neurolike elements are discussed, as is the relation of this work to classical and instrumental conditioning in animal learning studies and its possible implications for research in the neurosciences.
