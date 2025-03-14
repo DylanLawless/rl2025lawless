@@ -1,0 +1,198 @@
+\input{head.tex}
+\usepackage[printonlyused,withpage,nohyperlinks]{acronym}
+\begin{document}
+\newcounter{myboxcounter}
+\newcommand{\boxlabel}[1]{%
+  \refstepcounter{myboxcounter}%
+  \label{#1}%
+}
+
+\title{An Actor-Critic Reinforcement Learning Framework for Genetic Variant Pathogenicity}
+
+\author[1]{Dylan Lawless\thanks{Addresses for correspondence: \href{mailto:Dylan.Lawless@uzh.ch}{Dylan.Lawless@uzh.ch}}}
+\affil[1]{Department of Intensive Care and Neonatology, University Children's Hospital Zürich, University of Zürich, Switzerland.}
+
+\maketitle
+\justify
+% \tableofcontents
+% \listoffigures
+% \listoftables
+
+\section*{Acronyms}
+\renewenvironment{description} % Internally acronym uses description which we redefine to make condense spacing. 
+{\list{}{\labelwidth0pt\itemindent-\leftmargin
+    \parsep-1em\itemsep0pt\let\makelabel\descriptionlabel}}
+               {\endlist}
+\begin{acronym} 
+% \acro{acat}[ACAT]{Aggregated Cauchy Association Test }
+% \acro{acmg}[ACMG]{American College of Medical Genetics and Genomics}
+% \acro{af}[AF]{Allele Frequency}
+% \acro{ad}[AD]{Autosomal Dominant}
+% \acro{ar}[AR]{Autosomal Recessive}
+% \acro{gwas}[GWAS]{Genome Wide Association Test}
+% \acro{maf}[MAF]{Minor Allele Frequency}
+% \acro{prs}[PRS]{Polygenic Risk Score} 
+% \acro{qc}[QC]{Quality Control}
+% \acro{qv}[QV]{Qualifying variant}
+% \acro{rl}[RL]{reinforcement learning}
+% \acro{ax}[QV\textsubscript{ax}]{Axiomatic Variants}
+% \acro{sf}[SF]{Secondary Findings}
+% \acro{skat}[SKAT]{sequence kernel association test} 
+% \acro{sphn}[SPHN]{Swiss Personalized Health Network}
+% \acro{vqsr}[VQSR]{Variant Quality Score Recalibration}
+% \acro{vsat}[VSAT]{Variant Set Association Test}
+% \acro{wgs}[WGS]{Whole Genome Sequencing}
+\acro{rl}[RL]{reinforcement learning}
+\acro{acmg}[ACMG]{American College of Medical Genetics and Genomics}
+\acro{roc}[ROC]{receiver operating characteristic}
+\acro{auc}[AUC]{area under the curve}
+\acro{td}[TD]{temporal-difference}
+\acro{af}[AF]{allele frequency}
+\acro{maf}[MAF]{minor allele frequency}
+\acro{qc}[QC]{quality control}
+\end{acronym}
+\clearpage
+ 
+\section*{Abstract}
+
+We present a \ac{rl} framework that uses established genomic metrics -- such as the GuRu score, variant/gene risk priors, and population frequency -- to estimate the probability of observing a given genetic variant in disease. Importantly, our approach does not directly predict variant pathogenicity; instead, it quantifies the cumulative evidence supporting a variant’s clinical observability within a Bayesian context. Using simulated genetic data with a range of variability and label noise, we systematically evaluated the actor-critic algorithm performance across multiple scenarios, employing metrics including \ac{roc} curves, \ac{auc} , calibration plots, and learning dynamics. Results indicate predictive accuracy and effective learning, demonstrating \ac{rl}’s potential as a practical tool for genomic variant interpretation, setting the stage for integration into a broader Bayesian classification framework.
+
+\section{Introduction}
+Precise interpretation of genetic variants remains a central challenge in precision medicine, significantly impacting clinical decision-making and patient care. Differentiating pathogenic from benign variants accurately is essential for genetic diagnostics. Standard classification methods often face limitations due to incomplete or uncertain annotations, motivating the exploration of adaptive machine learning techniques.
+
+\ac{rl} provides an appealing alternative to traditional supervised methods by utilising evaluative rather than instructive feedback. Instead of explicitly labelled outcomes, \ac{rl} algorithms receive scalar rewards reflecting decision quality, thereby naturally balancing exploration of uncertain genomic space and exploitation of known information. Inspired by the classical $k$-armed bandit problem, our approach adapts an actor-critic algorithm to genomic data, using key features already available clinically -- such as the GuRu score, gene risk categorisation, and population allele frequency -- to classify the probability of a variant being assigned as pathogenic based on the existing evidence.
+This is subtly but importantly distinct form assigning pathogenicity itself, which is a separate task.
+
+In this study, we systematically quantify \ac{rl} performance with evaluation metrics within simulated genomic scenarios, incorporating data imperfections. Our goal is to identify \ac{rl} methodologies and parameter configurations that exhibit robust and accurate predictive capabilities, thus laying the groundwork for subsequent integration into a Bayesian analytical framework aimed at interpreting genetic evidence in clinical diagnostics.
+
+\section{Methods}  
+Our investigation employed a synthetic dataset designed to mimic the characteristics of genetic variant data. The dataset comprised 2,000 variants, with 50\% of the entries containing known pathogenicity labels and the remaining 50\% left unlabelled for prediction purposes. Variants were generated to reflect realistic genomic scenarios by incorporating features such as the GuRu score, gene number, and population frequency. 
+The variant distributions for each feature were designed using a mixture of priors. Variants in genes numbered 4 to 10 were assigned higher prior probabilities of pathogenicity, while variants in genes numbered 1 to 6 had lower pathogenicity priors. Genes 4–6 appeared in both categories, reflecting realistic cases where a single gene can harbour both pathogenic and benign variants depending on other genomic features.
+Furthermore, to simulate realistic errors and uncertainties commonly encountered in empirical genomic datasets, we intentionally introduced misannotations by randomly flipping the true pathogenicity labels for a predefined proportion (10\%, 20\%, and 30\%) of the variants.
+
+The GuRu score, also previously reported as the ACMGuru score, is a composite metric designed to quantify the totality of the best-known evidence regarding a genetic variant's function, particularly its potential to be classified as pathogenic or benign. Rather than providing a direct measure of pathogenicity, the GuRu score aggregates diverse types of evidence -- including clinical data, functional assays, and computational predictions -- to reflect the amount of prior knowledge available about a variant. This evidence-based measure helps to objectively gauge the consensus on a variant’s classification and can be substituted by other similar metrics that integrate multiple lines of evidence, thereby offering a flexible tool for variant interpretation in genomic studies.
+
+The reinforcement learning framework was implemented via an actor-critic algorithm. In our formulation, the state space was constructed by discretising the GuRu score into four bins, the population frequency into three bins, and the gene risk into a binary indicator; the product of these discretisations yielded 24 unique states. The action space was binary, corresponding to the two possible classifications: benign (0) or pathogenic (1). At each iteration, the \ac{rl} agent observed a state corresponding to a variant and selected an action using a probabilistic policy derived from a sigmoid function applied to a vector of actor weights. A reward of +1 was granted if the predicted label matched the true pathogenicity, otherwise a penalty of -1 was imposed. The \ac{td} error, defined as the difference between the received reward and the critic’s estimate of the state value, was used to update both the actor and critic weights using learning rates $\alpha$ and $\beta$, respectively.
+
+In order to assess the robustness of our model, we varied three critical parameters: the noise level in the training labels ($\eta$), the actor learning rate ($\alpha$), and the critic learning rate ($\beta$). For each combination of these parameters, the model was trained for 20 epochs, and a variety of performance metrics were recorded.
+
+The evaluation comprised epoch-level measures of average \ac{td} error and average reward, as well as more detailed assessments including \ac{roc} curves with associated \ac{auc} values, precision, recall, F1 scores, cumulative learning curves, and calibration plots. All these metrics were aggregated and visualised for comparison of the effects of different parameter settings.
+
+To improve computational efficiency and allow extensive hyperparameter evaluation, we employed parallel computing through the \texttt{doParallel} and \texttt{foreach} packages in R. We used multiple cores to simultaneously evaluate different parameter combinations, reducing the computational time required for extensive simulations. Worker-specific logging, identified by process IDs, ensured clear tracking and reproducibility of parallel computations.
+
+Synthetic data were generated according to the specified stratification and noise levels, and the \ac{rl} model was trained on a randomly partitioned training set for each combination of parameters. Performance on a held-out test set was evaluated and visualised.
+Additionally, we generated visualisations of feature distributions, correlation matrices, and covariance matrices across noise levels, providing comprehensive diagnostic insights into the synthetic dataset’s structure and variability.
+
+\section{Results}
+
+\subsection{Data representation}
+
+We generated a synthetic dataset that simulates a minimally simplistic genomic variant data with both known and unknown pathogenicity. 
+A necessary follow-up remains for the generation of highly accurate data representation and validation with real-world data .
+The dataset comprises key variables: GuRu Score, Population Frequency (\emph{Pop Freq}), Gene Number (\emph{Gene}), and ClinVar Pathogenicity (\emph{Pathogenicity}). Known variants were produced from four distinct groups, reflecting varying profiles of these variables, while 50\% of the dataset consists of variants with unknown pathogenicity, reserved for predictive modelling using reinforcement learning.
+
+Figure~\ref{fig:data_dist} shows the overlaid distributions of these variables across three noise levels (0.1, 0.2, and 0.3). The figure illustrates how the distributions of \emph{Guru Score}, \emph{Pop Freq}, \emph{Gene}, and \emph{Pathogenicity} vary as the noise level increases, providing insight into the robustness of the generated data.
+
+Figure~\ref{fig:data_matrices} displays the correlation and covariance matrices for the known variants at each noise level. These matrices reveal notable relationships among the variables, such as a strong inverse correlation between \emph{Guru Score} and \emph{Pop Freq}, as well as a positive correlation between \emph{Guru Score} and \emph{Pathogenicity}. The covariance matrices further quantify the variability inherent in these relationships.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.99\textwidth]{../figures/data_dist.png}
+    \caption{Data Distributions Across Noise Levels. This figure presents the overlaid distributions of GuRu Score, Population Frequency, Gene Number, and ClinVar Pathogenicity for noise levels 0.1, 0.2, and 0.3.}
+    \label{fig:data_dist}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.99\textwidth]{../figures/data_matrices.png}
+    \caption{Correlation and Covariance Matrices Across Noise Levels. The figure displays the correlation (left) and covariance (right) matrices for the known variants, illustrating the relationships between \emph{Guru Score}, \emph{Pop Freq}, \emph{Gene}, and \emph{Pathogenicity} at various noise levels.}
+    \label{fig:data_matrices}
+\end{figure}
+
+
+\clearpage
+
+\subsection{Performance Evaluation}
+
+In this study, we evaluated the performance of a \ac{rl} model that uses GuRu scores and additional variant features to predict evidence supporting the assignment of pathogenicity in genetic data. The model was trained on known disease‐causing variants and subsequently applied to predict the status of unknown variants. The experiments varied the noise level in the training labels, as well as the actor ($\alpha$) and critic ($\beta$) learning rates. Performance was assessed using several metrics: average reward and \ac{td} error during training, cumulative learning curves, \ac{roc}  curves with the corresponding \ac{auc}, and calibration of predicted probabilities.
+
+Figure~\ref{fig:epoch_reward} shows the evolution of the average reward per epoch during training. This plot demonstrates that, under different parameter settings and noise levels, the model progressively improves its reward performance over successive epochs, indicating effective learning.
+Complementing this, Figure~\ref{fig:epoch_td} presents the average \ac{td} error per epoch. The decreasing \ac{td} error over time reflects the convergence of the model’s value estimates and confirms that the learning algorithm is stabilising across training epochs.
+Figure~\ref{fig:learning} depicts the cumulative average reward over training samples, providing a continuous view of the learning progress. The gradual increase in the cumulative reward further supports the model's ability to optimise its decision-making process over time.
+
+For evaluating the classification performance, Figure~\ref{fig:roc_curve} displays the \ac{roc} curves for various parameter combinations. These curves illustrate the trade-off between the true positive rate and the false positive rate, with several settings yielding discrimination ability. This observation is reinforced by the \ac{auc} heatmap in Figure~\ref{fig:auc}, which summarises how \ac{auc} values vary as a function of $\alpha$ and $\beta$ for each noise level. In some cases, \ac{auc} values exceed 0.8, demonstrating adequate baseline performance.
+
+Figure~\ref{fig:calibration} provides a calibration plot comparing the mean predicted probabilities to the observed proportions of pathogenic variants. Close alignment between the predicted and observed values for given parameter settings indicates that the model’s probability estimates are well-calibrated.
+These results demonstrate that our baseline \ac{rl} framework is capable of learning to predict evidence for assigning variant pathogenicity from noisy data, with the performance being sensitive to the learning rate parameters and the level of label noise.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.99\textwidth]{../figures/epoch_reward.png}
+    \caption{Average Reward per Epoch. This plot illustrates the evolution of the average reward during training, highlighting the model's improving performance across different parameter settings and noise levels.}
+    \label{fig:epoch_reward}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.99\textwidth]{../figures/epoch_td.png}
+    \caption{Average Temporal-Difference (TD) Error per Epoch. This figure displays the convergence behaviour of the learning algorithm, with decreasing \ac{td} error over successive epochs indicating stabilisation of the value estimates.}
+    \label{fig:epoch_td}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.99\textwidth]{../figures/learning.png}
+    \caption{Cumulative Average Reward over Training Samples. The learning curve reflects the continuous improvement in model performance throughout training.}
+    \label{fig:learning}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.99\textwidth]{../figures/roc_curve.png}
+    \caption{Receiver Operating Characteristic (ROC) Curves by Parameter Combination. These curves illustrate the trade-off between the true positive and false positive rates, demonstrating high discrimination ability under certain parameter settings.}
+    \label{fig:roc_curve}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.99\textwidth]{../figures/auc.png}
+    \caption{\ac{auc} Heatmap. This heatmap summarises the area under the \ac{roc} curve  (\ac{auc}) as a function of the actor ($\alpha$) and critic ($\beta$) learning rates, faceted by noise level. Several combinations achieve \ac{auc} values exceeding 0.8, indicating robust classification performance.}
+    \label{fig:auc}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.99\textwidth]{../figures/calibration.png}
+    \caption{Calibration Plot. This plot compares the mean predicted probabilities to the observed proportions of pathogenic variants, showing that the predicted probabilities are well-calibrated across various parameter combinations.}
+    \label{fig:calibration}
+\end{figure}
+
+\clearpage
+
+
+\section{Discussion}
+In this study, we have established a \ac{rl} framework as an incremental step toward a broader Bayesian methodology aimed at classifying prior evidence about genetic variants being identified as pathogenic (or benign). Our current investigation focuses on evaluating \ac{rl} methods on simulated data, explicitly quantifying multiple performance metrics relevant to the prediction of pathogenicity. By simulating scenarios reflective of real-world complexities, such as label noise and variant heterogeneity, we have demonstrated which baseline \ac{rl} configurations exhibit most reliable performance.
+
+The progressive improvement observed in average reward per epoch (Figure~\ref{fig:epoch_reward}) illustrates the model's capacity for learning despite varying levels of noise and different hyperparameter settings. Notably, the reduction in \ac{td} error across epochs (Figure~\ref{fig:epoch_td}) indicates successful convergence of our actor-critic \ac{rl} algorithm. This stabilisation is critical, as it demonstrates the algorithm's ability to adaptively refine its predictions, which is a cornerstone for its utility in clinical genomic interpretation. While the underlying data has many flaws, it allows us to prepare for more real-world experiments.
+
+A critical aspect of reinforcement learning is its dynamic adaptability, which we have visualised in the cumulative average reward curves (Figure~\ref{fig:learning}). This upward trajectory highlights the model's ability to enhance predictive accuracy progressively throughout the training period. Such adaptability will be required in practical genomic applications, where new sources of variant evidence continuously emerge, and datasets evolve.
+
+Our analysis of \ac{roc} curves (Figure~\ref{fig:roc_curve}) and the corresponding heatmap of \ac{auc} values (Figure~\ref{fig:auc}) provides a view of the predictive performance across varying parameters. Several parameter combinations produced robust discrimination performance, underscored by \ac{auc} values exceeding 0.8 even under challenging noise conditions. This finding emphasises the potential for selecting optimal \ac{rl} hyperparameters tailored to specific genomic contexts and quality conditions in real datasets.
+
+Calibration analysis (Figure~\ref{fig:calibration}) demonstrates that the \ac{rl} model can generate accurate probability estimates that closely match observed pathogenic proportions. Reliable calibration is essential for clinical interpretation, as it provides confidence in the quantitative risk assessments derived from such models. The consistency observed across a variety of parameter settings strengthens the credibility of our \ac{rl}-based predictions.
+
+This study sets the stage for subsequent application of our \ac{rl} framework to real genomic data, where the complexities encountered in simulations are amplified by biological variability and data imperfections. The current simulated environment has enabled us to systematically explore and quantify algorithm performance across controlled yet realistic scenarios. Our future work will focus on applying these \ac{rl} methods to empirical genomic data, further integrating Bayesian frameworks to enhance interpretability, robustness, and clinical relevance.
+
+Ultimately, this incremental methodological development has implications for broader genomic research. By refining predictive accuracy and interpretability, \ac{rl} and subsequent Bayesian methodologies hold promise for transforming evidence interpretation, enhancing clinical decision-making, and ultimately improving personalised healthcare.
+
+\clearpage
+\section{Conclusion}
+We have presented an actor-critic reinforcement learning framework that uses the GuRu score, gene number, and population frequency to predict the pathogenicity of genetic variants. By training on a dataset of known disease-causing variants and evaluating on unlabelled data, the model demonstrates promising performance across a range of parameter settings. The comprehensive evaluation, which includes \ac{roc} analysis, precision-recall metrics, learning curves and calibration assessments, highlights the potential of \ac{rl} methodologies in the field of genetic diagnostics. This framework provides a solid foundation for further research into the integration of machine learning techniques with genomic data analysis and may ultimately contribute to improved personalised medical interventions.
+
+In this study, we have developed an actor-critic \ac{rl} ramework that uses the GuRu score, variant/gene risk categorisation, and population frequency to estimate the probability of observing a variant in disease, rather than directly classifying its pathogenicity. A central contribution of our work is the demonstration that \ac{rl} can learn to discern which evidence supports known variant labels, thereby serving as a crucial precursor to a broader Bayesian classification framework. Our evaluations indicate that the model achieves robust predictive performance even under varying noise conditions, as evidenced by reasonable baseline \ac{auc} values, well-calibrated probability estimates, and converging learning curves. These findings pave the way for future integration of \ac{rl} with Bayesian inference in clinical genomics, ultimately enhancing the accuracy and genetic variant interpretation and improving personalized healthcare outcomes.
+
+% \clearpage
+\bibliographystyle{unsrtnat}
+\bibliography{references}  
+
+\end{document}

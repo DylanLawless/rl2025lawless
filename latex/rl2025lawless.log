@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.7.19)  13 MAR 2025 22:40
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.7.19)  14 MAR 2025 11:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1921,7 +1921,28 @@ File: se-ascii-print.def 2016/05/16 v1.11 stringenc: Printable ASCII characters
 )
 [1
 
-] [2] [3]
+]
+Package acronym Info: Label `acro:rl' newly defined as it shall be overridden
+although it is yet undefined on input line 58.
+Package acronym Info: Label `acro:roc' newly defined as it shall be overridden
+although it is yet undefined on input line 58.
+Package acronym Info: Label `acro:auc' newly defined as it shall be overridden
+although it is yet undefined on input line 58.
+ [2
+
+]
+Package acronym Info: Label `acro:td' newly defined as it shall be overridden
+although it is yet undefined on input line 75.
+ [3] [4]
+File: ../figures/data_dist.png Graphic file (type bmp)
+<../figures/data_dist.png>
+File: ../figures/data_matrices.png Graphic file (type bmp)
+<../figures/data_matrices.png>
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[5] [6]
 File: ../figures/epoch_reward.png Graphic file (type bmp)
 <../figures/epoch_reward.png>
 
@@ -1953,26 +1974,34 @@ File: ../figures/calibration.png Graphic file (type bmp)
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[4] [5] [6] [7] [8] [9] [10
+[7
 
-] [11] [12
+] [8] [9] [10] [11] [12] [13
+
+] [14]
+No file rl2025lawless.bbl.
+[15
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 161.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 161.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 198.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 198.
  (./rl2025lawless.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 161.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 161.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 198.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 198.
 Package rerunfilecheck Info: File `rl2025lawless.out' has not changed.
-(rerunfilecheck)             Checksum: AECBD45194AAEF9A070D40078B797B2A.
+(rerunfilecheck)             Checksum: 49B50D1B12D5AED69385DD076FA85F55.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
  ) 
 Here is how much of TeX's memory you used:
- 41038 strings out of 492970
- 854358 string characters out of 6133938
- 1007164 words of memory out of 5000000
- 44437 multiletter control sequences out of 15000+600000
- 538840 words of font info for 68 fonts, out of 8000000 for 9000
+ 41050 strings out of 492970
+ 854680 string characters out of 6133938
+ 1009383 words of memory out of 5000000
+ 44442 multiletter control sequences out of 15000+600000
+ 538848 words of font info for 69 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  65i,6n,101p,10556b,780s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on rl2025lawless.pdf (12 pages).
+Output written on rl2025lawless.pdf (15 pages).

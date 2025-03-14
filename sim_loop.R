@@ -5,6 +5,8 @@ library(pROC)
 library(patchwork)
 library(doParallel)
 library(foreach)
+library(reshape2)
+library(knitr)
 
 # Define parameter grids ----
 noise_levels <- c(0.1, 0.2, 0.3)
@@ -24,6 +26,7 @@ known_ratio <- 0.5          # 50% known, 50% unknown
 known_entries <- total_entries * known_ratio
 unknown_entries <- total_entries - known_entries
 
+# data ----
 # Define gene pools and groups
 non_pathogenic_genes <- 1:6   # More likely to have non-pathogenic variants
 pathogenic_genes <- 4:10      # More likely to have pathogenic variants
@@ -43,7 +46,7 @@ generate_data <- function(noise_level) {
     VariantNumber = integer(),
     GeneNumber = integer(),
     ClinVarPathogenicity = integer(),
-    ACMGScore = integer(),
+    GuRuScore = integer(),
     PopulationFrequency = numeric(),
     stringsAsFactors = FALSE
   )
@@ -54,7 +57,7 @@ generate_data <- function(noise_level) {
       VariantNumber = seq(from = nrow(variant_data) + 1, length.out = n_per_group),
       GeneNumber = sample(group$gene_pool, n_per_group, replace = TRUE),
       ClinVarPathogenicity = rep(group$pathogenicity, n_per_group),
-      ACMGScore = sample(group$acmg_range, n_per_group, replace = TRUE),
+      GuRuScore = sample(group$acmg_range, n_per_group, replace = TRUE),
       PopulationFrequency = runif(n_per_group, group$freq_range[1], group$freq_range[2])
     )
     # Introduce noise: flip a fraction of the labels
@@ -67,7 +70,7 @@ generate_data <- function(noise_level) {
     VariantNumber = seq(from = nrow(variant_data) + 1, to = nrow(variant_data) + unknown_entries),
     GeneNumber = sample(1:10, unknown_entries, replace = TRUE),
     ClinVarPathogenicity = rep(NA_integer_, unknown_entries),
-    ACMGScore = sample(0:20, unknown_entries, replace = TRUE),
+    GuRuScore = sample(0:20, unknown_entries, replace = TRUE),
     PopulationFrequency = runif(unknown_entries, 0, 1)
   )
   variant_data <- rbind(variant_data, unknown_data)
@@ -75,7 +78,7 @@ generate_data <- function(noise_level) {
   return(variant_data)
 }
 
-# Define helper functions
+# Define helper functions ----
 sigmoid <- function(x) 1/(1+exp(-x))
 get_state <- function(acmg, freq, gene) {
   acmg_bin <- if (acmg <= 5) 0 else if (acmg <= 10) 1 else if (acmg <= 15) 2 else 3
@@ -128,7 +131,7 @@ results <- foreach(i = 1:nrow(param_grid), .combine = 'rbind', .packages = c("dp
     for (j in 1:nrow(train_set)) {
       sample_counter <- sample_counter + 1
       row <- train_set[j, ]
-      state_idx <- get_state(row$ACMGScore, row$PopulationFrequency, row$GeneNumber) + 1
+      state_idx <- get_state(row$GuRuScore, row$PopulationFrequency, row$GeneNumber) + 1
       p_action <- sigmoid(w[state_idx])
       action <- ifelse(runif(1) < p_action, 1, 0)
       reward <- ifelse(action == row$ClinVarPathogenicity, 1, -1)
@@ -177,7 +180,7 @@ results <- foreach(i = 1:nrow(param_grid), .combine = 'rbind', .packages = c("dp
   action_probs <- numeric(nrow(test_set))
   for (k in 1:nrow(test_set)) {
     row <- test_set[k, ]
-    state_idx <- get_state(row$ACMGScore, row$PopulationFrequency, row$GeneNumber) + 1
+    state_idx <- get_state(row$GuRuScore, row$PopulationFrequency, row$GeneNumber) + 1
     p_action <- sigmoid(w[state_idx])
     action_probs[k] <- p_action
     test_set$Predicted[k] <- ifelse(p_action > 0.5, 1, 0)
@@ -299,7 +302,7 @@ for (i in 1:nrow(param_grid)) {
     train_set <- train_set[sample(nrow(train_set)), ]
     for (j in 1:nrow(train_set)) {
       row <- train_set[j, ]
-      state_idx <- get_state(row$ACMGScore, row$PopulationFrequency, row$GeneNumber) + 1
+      state_idx <- get_state(row$GuRuScore, row$PopulationFrequency, row$GeneNumber) + 1
       p_action <- sigmoid(w[state_idx])
       action <- ifelse(runif(1) < p_action, 1, 0)
       reward <- ifelse(action == row$ClinVarPathogenicity, 1, -1)
@@ -312,7 +315,7 @@ for (i in 1:nrow(param_grid)) {
   action_probs <- numeric(nrow(test_set))
   for (k in 1:nrow(test_set)) {
     row <- test_set[k, ]
-    state_idx <- get_state(row$ACMGScore, row$PopulationFrequency, row$GeneNumber) + 1
+    state_idx <- get_state(row$GuRuScore, row$PopulationFrequency, row$GeneNumber) + 1
     p_action <- sigmoid(w[state_idx])
     action_probs[k] <- p_action
     test_set$Predicted[k] <- ifelse(p_action > 0.5, 1, 0)
@@ -376,3 +379,107 @@ ggsave(filename = "./figures/learning.png", plot = p_learning, width = 8, height
 ggsave(filename = "./figures/calibration.png", plot = p_calib, width = 16, height = 6)
 ggsave(filename = "./figures/roc_curve.png", plot = p_roc, width = 8, height = 6)
 # ggsave(filename = "./figures/final_layout.png", plot = final_layout, width = 10, height = 10)
+
+
+
+# Plot data ----
+
+# Generate combined data for all noise levels
+df_list <- lapply(noise_levels, function(nl) {
+  df_tmp <- generate_data(noise_level = nl)
+  df_tmp$noise_level <- factor(nl)
+  df_tmp
+})
+df_overlay <- do.call(rbind, df_list)
+
+# Overlay Distribution Plots ----
+# ACMG Score Distribution Overlay
+p_acmg_overlay <- ggplot(df_overlay, aes(x = GuRuScore, fill = noise_level)) +
+  geom_histogram(position = "identity", binwidth = 1, alpha = 0.4, color = "black") +
+  labs(title = "ACMG Score Distribution", x = "ACMG Score", y = "Count", fill = "Noise Level") 
+
+# Population Frequency Distribution Overlay
+p_freq_overlay <- ggplot(df_overlay, aes(x = PopulationFrequency, fill = noise_level)) +
+  geom_histogram(position = "identity", binwidth = 0.05, alpha = 0.4, color = "black") +
+  labs(title = "Population Frequency Distribution", x = "Population Frequency", y = "Count", fill = "Noise Level") 
+
+# Gene Number Distribution (discrete) - use position dodge
+p_gene_overlay <- ggplot(df_overlay, aes(x = factor(GeneNumber), fill = noise_level)) +
+  geom_bar(position = "dodge", color = "black") +
+  labs(title = "Gene Number Distribution", x = "Gene Number", y = "Count", fill = "Noise Level") 
+
+# ClinVar Pathogenicity Distribution for known entries
+df_known_overlay <- df_overlay %>% filter(!is.na(ClinVarPathogenicity))
+
+p_path_overlay <- ggplot(df_known_overlay, aes(x = factor(ClinVarPathogenicity), fill = noise_level)) +
+  geom_bar(position = "dodge", color = "black") +
+  labs(title = "ClinVar Pathogenicity (Known)", x = "Pathogenicity", y = "Count", fill = "Noise Level") 
+
+# Combine overlay distribution plots in a grid
+overlay_distributions <- (p_acmg_overlay | p_freq_overlay) / (p_gene_overlay | p_path_overlay)
+
+# Cov corr ----
+# Define mapping for variable names to new headings
+var_labels <- c("GuRuScore" = "Guru Score", 
+                "PopulationFrequency" = "Pop Freq", 
+                "GeneNumber" = "Gene", 
+                "ClinVarPathogenicity" = "Pathogenicity")
+
+# Helper function for correlation plot per noise level with text labels
+make_corr_plot <- function(nl) {
+  df_nl <- df_overlay %>% filter(!is.na(ClinVarPathogenicity), noise_level == nl)
+  num_vars <- c("GuRuScore", "PopulationFrequency", "GeneNumber", "ClinVarPathogenicity")
+  cor_mat <- cor(df_nl[, num_vars])
+  cor_df <- melt(cor_mat)
+  ggplot(cor_df, aes(Var1, Var2, fill = value)) +
+    geom_tile() +
+    geom_text(aes(label = round(value, 2)), color = "black", size = 4) +
+    scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0) +
+    scale_x_discrete(labels = var_labels) +
+    scale_y_discrete(labels = var_labels) +
+    labs(title = paste("Correlation (Noise =", nl, ")"), x = "", y = "", fill = "Corr") +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+}
+
+# Helper function for covariance plot per noise level with text labels
+make_cov_plot <- function(nl) {
+  df_nl <- df_overlay %>% filter(!is.na(ClinVarPathogenicity), noise_level == nl)
+  num_vars <- c("GuRuScore", "PopulationFrequency", "GeneNumber", "ClinVarPathogenicity")
+  cov_mat <- cov(df_nl[, num_vars])
+  cov_df <- melt(cov_mat)
+  ggplot(cov_df, aes(Var1, Var2, fill = value)) +
+    geom_tile() +
+    geom_text(aes(label = round(value, 2)), color = "black", size = 4) +
+    scale_fill_gradient(low = "white", high = "darkred") +
+    scale_x_discrete(labels = var_labels) +
+    scale_y_discrete(labels = var_labels) +
+    labs(title = paste("Covariance (Noise =", nl, ")"), x = "", y = "", fill = "Cov") +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+}
+
+# Generate correlation and covariance plots for each noise level
+corr_plots <- lapply(levels(df_overlay$noise_level), make_corr_plot)
+cov_plots <- lapply(levels(df_overlay$noise_level), make_cov_plot)
+
+# Stack correlation plots vertically and covariance plots vertically
+corr_stack <- wrap_plots(corr_plots, ncol = 1)
+cov_stack <- wrap_plots(cov_plots, ncol = 1)
+
+# Combine correlation and covariance stacks side-by-side
+matrix_plots <- corr_stack | cov_stack
+
+
+# Combine All Plots and Save ---- 
+
+overlay_distributions <- overlay_distributions + plot_annotation(title = "Data Distributions Across Noise Levels")
+
+matrix_plots <- matrix_plots + plot_annotation(title = "Corr / Cov Matrices Across Noise Levels")
+
+ggsave(filename = "./figures/data_dist.png", 
+       plot = overlay_distributions, width = 8, height = 5)
+
+ggsave(filename = "./figures/data_matrices.png", 
+       plot = matrix_plots, width = 9, height = 8)
+
