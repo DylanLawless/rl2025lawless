@@ -1,9 +1,117 @@
-\begin{thebibliography}{2}
+\begin{thebibliography}{24}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Richards et~al.(2015)Richards, Aziz, Bale, Bick, Das, Gastier-Foster,
+  Grody, Hegde, Lyon, Spector, et~al.]{richards2015standards}
+Sue Richards, Nazneen Aziz, Sherri Bale, David Bick, Soma Das, Julie
+  Gastier-Foster, Wayne~W Grody, Madhuri Hegde, Elaine Lyon, Elaine Spector,
+  et~al.
+\newblock Standards and guidelines for the interpretation of sequence variants:
+  a joint consensus recommendation of the american college of medical genetics
+  and genomics and the association for molecular pathology.
+\newblock \emph{Genetics in medicine}, 17\penalty0 (5):\penalty0 405--423,
+  2015.
+
+\bibitem[Li et~al.(2017)Li, Datto, Duncavage, Kulkarni, Lindeman, Roy,
+  Tsimberidou, Vnencak-Jones, Wolff, Younes, et~al.]{li2017standards}
+Marilyn~M Li, Michael Datto, Eric~J Duncavage, Shashikant Kulkarni, Neal~I
+  Lindeman, Somak Roy, Apostolia~M Tsimberidou, Cindy~L Vnencak-Jones, Daynna~J
+  Wolff, Anas Younes, et~al.
+\newblock Standards and guidelines for the interpretation and reporting of
+  sequence variants in cancer: a joint consensus recommendation of the
+  association for molecular pathology, american society of clinical oncology,
+  and college of american pathologists.
+\newblock \emph{The Journal of molecular diagnostics}, 19\penalty0
+  (1):\penalty0 4--23, 2017.
+
+\bibitem[Li and Wang(2017)]{li2017intervar}
+Quan Li and Kai Wang.
+\newblock Intervar: clinical interpretation of genetic variants by the 2015
+  acmg-amp guidelines.
+\newblock \emph{The American Journal of Human Genetics}, 100\penalty0
+  (2):\penalty0 267--280, 2017.
+
+\bibitem[Riggs et~al.(2020)Riggs, Andersen, Cherry, Kantarci, Kearney, Patel,
+  Raca, Ritter, South, Thorland, et~al.]{riggs2020technical}
+Erin~Rooney Riggs, Erica~F Andersen, Athena~M Cherry, Sibel Kantarci, Hutton
+  Kearney, Ankita Patel, Gordana Raca, Deborah~I Ritter, Sarah~T South, Erik~C
+  Thorland, et~al.
+\newblock Technical standards for the interpretation and reporting of
+  constitutional copy-number variants: a joint consensus recommendation of the
+  american college of medical genetics and genomics (acmge and the clinical
+  genome resource (clingen).
+\newblock \emph{Genetics in Medicine}, 22\penalty0 (2):\penalty0 245--257,
+  2020.
+
+\bibitem[Tavtigian et~al.(2020)Tavtigian, Harrison, Boucher, and
+  Biesecker]{tavtigian2020fitting}
+Sean~V Tavtigian, Steven~M Harrison, Kenneth~M Boucher, and Leslie~G Biesecker.
+\newblock Fitting a naturally scaled point system to the acmg/amp variant
+  classification guidelines.
+\newblock \emph{Human mutation}, 41\penalty0 (10):\penalty0 1734--1737, 2020.
+
+\bibitem[Pedersen et~al.(2021)Pedersen, Brown, Dashnow, Wallace, Velinder,
+  Tristani-Firouzi, Schiffman, Tvrdik, Mao, Best,
+  et~al.]{pedersen2021effective}
+Brent~S Pedersen, Joe~M Brown, Harriet Dashnow, Amelia~D Wallace, Matt
+  Velinder, Martin Tristani-Firouzi, Joshua~D Schiffman, Tatiana Tvrdik, Rong
+  Mao, D~Hunter Best, et~al.
+\newblock Effective variant filtering and expected candidate variant yield in
+  studies of rare human disease.
+\newblock \emph{NPJ Genomic Medicine}, 6\penalty0 (1):\penalty0 1--8, 2021.
+
+\bibitem[Anderson et~al.(2010)Anderson, Pettersson, Clarke, Cardon, Morris, and
+  Zondervan]{anderson2010data}
+Carl~A Anderson, Fredrik~H Pettersson, Geraldine~M Clarke, Lon~R Cardon,
+  Andrew~P Morris, and Krina~T Zondervan.
+\newblock Data quality control in genetic case-control association studies.
+\newblock \emph{Nature protocols}, 5\penalty0 (9):\penalty0 1564--1573, 2010.
+\newblock URL \url{https://doi.org/10.1038/nprot.2010.116}.
+
+\bibitem[Uffelmann et~al.(2021)Uffelmann, Huang, Munung, De~Vries, Okada,
+  Martin, Martin, Lappalainen, and Posthuma]{uffelmann2021genome}
+Emil Uffelmann, Qin~Qin Huang, Nchangwi~Syntia Munung, Jantina De~Vries,
+  Yukinori Okada, Alicia~R Martin, Hilary~C Martin, Tuuli Lappalainen, and
+  Danielle Posthuma.
+\newblock Genome-wide association studies.
+\newblock \emph{Nature Reviews Methods Primers}, 1\penalty0 (1):\penalty0 59,
+  2021.
+\newblock URL \url{https://doi.org/10.1038/s43586-021-00056-9}.
+
+\bibitem[Karczewski et~al.(2020)Karczewski, Francioli, Tiao, Cummings,
+  Alf{\"o}ldi, Wang, Collins, Laricchia, Ganna, Birnbaum,
+  et~al.]{karczewski2020mutational}
+Konrad~J Karczewski, Laurent~C Francioli, Grace Tiao, Beryl~B Cummings, Jessica
+  Alf{\"o}ldi, Qingbo Wang, Ryan~L Collins, Kristen~M Laricchia, Andrea Ganna,
+  Daniel~P Birnbaum, et~al.
+\newblock The mutational constraint spectrum quantified from variation in
+  141,456 humans.
+\newblock \emph{Nature}, 581\penalty0 (7809):\penalty0 434--443, 2020.
+
+\bibitem[Landrum et~al.(2016)Landrum, Lee, Benson, Brown, Chao, Chitipiralla,
+  Gu, Hart, Hoffman, Hoover, et~al.]{landrum2016clinvar}
+Melissa~J Landrum, Jennifer~M Lee, Mark Benson, Garth Brown, Chen Chao,
+  Shanmuga Chitipiralla, Baoshan Gu, Jennifer Hart, Douglas Hoffman, Jeffrey
+  Hoover, et~al.
+\newblock Clinvar: public archive of interpretations of clinically relevant
+  variants.
+\newblock \emph{Nucleic acids research}, 44\penalty0 (D1):\penalty0 D862--D868,
+  2016.
+
+\bibitem[Rivera-Mu{\~n}oz et~al.(2018)Rivera-Mu{\~n}oz, Milko, Harrison,
+  Azzariti, Kurtz, Lee, Mester, Weaver, Currey, Craigen,
+  et~al.]{rivera2018clingen}
+Edgar~A Rivera-Mu{\~n}oz, Laura~V Milko, Steven~M Harrison, Danielle~R
+  Azzariti, C~Lisa Kurtz, Kristy Lee, Jessica~L Mester, Meredith~A Weaver, Erin
+  Currey, William Craigen, et~al.
+\newblock Clingen variant curation expert panel experiences and standardized
+  processes for disease and gene-level specification of the acmg/amp guidelines
+  for sequence variant interpretation.
+\newblock \emph{Human mutation}, 39\penalty0 (11):\penalty0 1614--1622, 2018.
 
 \bibitem[Barto et~al.(1983)Barto, Sutton, and Anderson]{barto1983neuronlike}
 Andrew~G Barto, Richard~S Sutton, and Charles~W Anderson.
@@ -17,5 +125,73 @@ Andrew~G Barto, Richard~S Sutton, and Charles~W Anderson.
 \newblock Looking back on the actor--critic architecture.
 \newblock \emph{IEEE Transactions on Systems, Man, and Cybernetics: Systems},
   51\penalty0 (1):\penalty0 40--50, 2020.
+
+\bibitem[Sutton et~al.(1998)Sutton, Barto, et~al.]{sutton1998reinforcement}
+Richard~S Sutton, Andrew~G Barto, et~al.
+\newblock \emph{Reinforcement learning: An introduction}, volume~1.
+\newblock MIT press Cambridge, 1998.
+
+\bibitem[Rumelhart et~al.(1985)Rumelhart, Hinton, Williams,
+  et~al.]{rumelhart1985learning}
+David~E Rumelhart, Geoffrey~E Hinton, Ronald~J Williams, et~al.
+\newblock Learning internal representations by error propagation, 1985.
+
+\bibitem[Barto and Jordan(1992)]{barto1992gradient}
+Andrew~G Barto and Michael~I Jordan.
+\newblock Gradient following without back-propagation in layered networks.
+  et-al.
+\newblock \emph{Frontiers in cognitive neuroscience}, pages 443--449, 1992.
+
+\bibitem[Williams(1992)]{williams1992simple}
+Ronald~J Williams.
+\newblock Simple statistical gradient-following algorithms for connectionist
+  reinforcement learning.
+\newblock \emph{Machine learning}, 8:\penalty0 229--256, 1992.
+
+\bibitem[Bhatnagar et~al.(2007)Bhatnagar, Sutton, Ghavamzadeh, and
+  Lee]{bhatnagar2007naturalgradient}
+Shalabh Bhatnagar, Richard~S Sutton, Mohammad Ghavamzadeh, and Mark Lee.
+\newblock Naturalgradient actor-critic algorithms.
+\newblock \emph{Automatica}, 2007.
+
+\bibitem[Watkins and Dayan(1992)]{watkins1992q}
+Christopher~JCH Watkins and Peter Dayan.
+\newblock Q-learning.
+\newblock \emph{Machine learning}, 8:\penalty0 279--292, 1992.
+
+\bibitem[Liu et~al.(2001)Liu, Xiong, and Zhang]{liu2001action}
+Derong Liu, Xiaoxu Xiong, and Yi~Zhang.
+\newblock Action-dependent adaptive critic designs.
+\newblock In \emph{IJCNN'01. International Joint Conference on Neural Networks.
+  Proceedings (Cat. No. 01CH37222)}, volume~2, pages 990--995. IEEE, 2001.
+
+\bibitem[Anderson(2000)]{anderson2000approximating}
+Charles~W Anderson.
+\newblock Approximating a policy can be easier than approximating a value
+  function.
+\newblock \emph{Computer Science Technical Report}, 2000.
+
+\bibitem[Silver et~al.(2016)Silver, Huang, Maddison, Guez, Sifre, Van
+  Den~Driessche, Schrittwieser, Antonoglou, Panneershelvam, Lanctot,
+  et~al.]{silver2016mastering}
+David Silver, Aja Huang, Chris~J Maddison, Arthur Guez, Laurent Sifre, George
+  Van Den~Driessche, Julian Schrittwieser, Ioannis Antonoglou, Veda
+  Panneershelvam, Marc Lanctot, et~al.
+\newblock Mastering the game of go with deep neural networks and tree search.
+\newblock \emph{nature}, 529\penalty0 (7587):\penalty0 484--489, 2016.
+
+\bibitem[Silver et~al.(2017)Silver, Schrittwieser, Simonyan, Antonoglou, Huang,
+  Guez, Hubert, Baker, Lai, Bolton, et~al.]{silver2017mastering}
+David Silver, Julian Schrittwieser, Karen Simonyan, Ioannis Antonoglou, Aja
+  Huang, Arthur Guez, Thomas Hubert, Lucas Baker, Matthew Lai, Adrian Bolton,
+  et~al.
+\newblock Mastering the game of go without human knowledge.
+\newblock \emph{nature}, 550\penalty0 (7676):\penalty0 354--359, 2017.
+
+\bibitem[Wiering and Van~Otterlo(2012)]{wiering2012reinforcement}
+Marco~A Wiering and Martijn Van~Otterlo.
+\newblock Reinforcement learning.
+\newblock \emph{Adaptation, learning, and optimization}, 12\penalty0
+  (3):\penalty0 729, 2012.
 
 \end{thebibliography}
