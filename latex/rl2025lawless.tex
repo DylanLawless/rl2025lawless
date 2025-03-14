@@ -7,7 +7,7 @@
   \label{#1}%
 }
 
-\title{An Actor-Critic Reinforcement Learning Framework for Genetic Variant Pathogenicity}
+\title{An Actor-Critic Reinforcement Learning Framework for Variant Evidence Interpretation}
 
 \author[1]{Dylan Lawless\thanks{Addresses for correspondence: \href{mailto:Dylan.Lawless@uzh.ch}{Dylan.Lawless@uzh.ch}}}
 \affil[1]{Department of Intensive Care and Neonatology, University Children's Hospital Zürich, University of Zürich, Switzerland.}
@@ -51,11 +51,17 @@
 \acro{maf}[MAF]{minor allele frequency}
 \acro{qc}[QC]{quality control}
 \end{acronym}
+
+\vfill
+\noindent Project code: \href{https://github.com/DylanLawless/rl2025lawless}{https://github.com/DylanLawless/rl2025lawless}
+
 \clearpage
  
+
 \section*{Abstract}
 
 We present a \ac{rl} framework that uses established genomic metrics -- such as the GuRu score, variant/gene risk priors, and population frequency -- to estimate the probability of observing a given genetic variant in disease. Importantly, our approach does not directly predict variant pathogenicity; instead, it quantifies the cumulative evidence supporting a variant’s clinical observability within a Bayesian context. Using simulated genetic data with a range of variability and label noise, we systematically evaluated the actor-critic algorithm performance across multiple scenarios, employing metrics including \ac{roc} curves, \ac{auc} , calibration plots, and learning dynamics. Results indicate predictive accuracy and effective learning, demonstrating \ac{rl}’s potential as a practical tool for genomic variant interpretation, setting the stage for integration into a broader Bayesian classification framework.
+
 
 \section{Introduction}
 Precise interpretation of genetic variants remains a central challenge in precision medicine, significantly impacting clinical decision-making and patient care. Differentiating pathogenic from benign variants accurately is essential for genetic diagnostics. Standard classification methods often face limitations due to incomplete or uncertain annotations, motivating the exploration of adaptive machine learning techniques.
@@ -185,10 +191,7 @@ This study sets the stage for subsequent application of our \ac{rl} framework to
 
 Ultimately, this incremental methodological development has implications for broader genomic research. By refining predictive accuracy and interpretability, \ac{rl} and subsequent Bayesian methodologies hold promise for transforming evidence interpretation, enhancing clinical decision-making, and ultimately improving personalised healthcare.
 
-\clearpage
 \section{Conclusion}
-We have presented an actor-critic reinforcement learning framework that uses the GuRu score, gene number, and population frequency to predict the pathogenicity of genetic variants. By training on a dataset of known disease-causing variants and evaluating on unlabelled data, the model demonstrates promising performance across a range of parameter settings. The comprehensive evaluation, which includes \ac{roc} analysis, precision-recall metrics, learning curves and calibration assessments, highlights the potential of \ac{rl} methodologies in the field of genetic diagnostics. This framework provides a solid foundation for further research into the integration of machine learning techniques with genomic data analysis and may ultimately contribute to improved personalised medical interventions.
-
 In this study, we have developed an actor-critic \ac{rl} ramework that uses the GuRu score, variant/gene risk categorisation, and population frequency to estimate the probability of observing a variant in disease, rather than directly classifying its pathogenicity. A central contribution of our work is the demonstration that \ac{rl} can learn to discern which evidence supports known variant labels, thereby serving as a crucial precursor to a broader Bayesian classification framework. Our evaluations indicate that the model achieves robust predictive performance even under varying noise conditions, as evidenced by reasonable baseline \ac{auc} values, well-calibrated probability estimates, and converging learning curves. These findings pave the way for future integration of \ac{rl} with Bayesian inference in clinical genomics, ultimately enhancing the accuracy and genetic variant interpretation and improving personalized healthcare outcomes.
 
 % \clearpage

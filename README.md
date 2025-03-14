@@ -1,4 +1,4 @@
-# RL2025Lawless: An Actor-Critic Reinforcement Learning Framework for Genetic Variant Pathogenicity
+# RL2025Lawless: An Actor-Critic Reinforcement Learning Framework for Variant Evidence Interpretation
 
 ## Overview
 
