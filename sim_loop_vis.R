@@ -7,6 +7,8 @@ library(doParallel)
 library(foreach)
 library(reshape2)
 library(knitr)
+library(gganimate)
+library(dplyr)
 
 # In this version we update the train_history to save features for interpretation in annimations 
 
@@ -23,8 +25,8 @@ param_grid <- expand.grid(noise_level = noise_levels,
 
 # Overall data generation parameters
 set.seed(666)  # For reproducibility of data generation
-# total_entries <- 2000 # start time 13:50 end 14:03
-total_entries <- 3000 # start time 14:10 end 
+# total_entries <- 2000 # start time 13:50 end 14:03 (13 minutes)
+total_entries <- 3000 # start time 14:10 end 14:35 (25 minutes)
 # total_entries <- 100
 known_ratio <- 0.5          # 50% known, 50% unknown
 known_entries <- total_entries * known_ratio

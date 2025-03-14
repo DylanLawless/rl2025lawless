@@ -1,14 +1,18 @@
 # RL2025Lawless: An Actor-Critic Reinforcement Learning Framework for Variant Evidence Interpretation
 
-<img src="figures/gif_genetic_rl_learning.gif" style="width: 45%;" alt="Genetic learning cumulative average reward increasing over echos gif"/>
-<img src="figures/gif_genetic_rl_scatter_gene.gif" style="width: 45%;" alt="Genetic learning cumulative average reward increasing over echos with gene indexed gif"/>
-
-<img src="figures/gif_genetic_rl_scatter_pact.gif" style="width: 100%;" alt="Example of increasing prediction over time with genetic features population frequency and GuRu score"/>
-
-
 ## Overview
 
 This project implements a reinforcement learning (RL) framework designed to estimate the probability of observing genetic variants in disease. Instead of directly predicting variant pathogenicity, the framework quantifies the cumulative evidence supporting a variant’s clinical observability within a Bayesian context. The approach integrates established genomic metrics—including the GuRu score (formerly known as the ACMGuru score), gene risk priors, and population frequency—to learn which evidence correctly supports known variant labels. This adaptive learning step is intended to form the basis for subsequent Bayesian integration, yielding nuanced probability estimates for variant-disease associations.
+
+<table>
+  <tr>
+    <td><img src="figures/gif_genetic_rl_learning.gif" width="300" alt="Genetic learning cumulative average reward gif"/></td>
+    <td><img src="figures/gif_genetic_rl_scatter_gene.gif" width="300" alt="Genetic learning with gene index gif"/></td>
+  </tr>
+</table>
+
+<img src="figures/gif_genetic_rl_scatter_pact.gif" style="width: 100%;" alt="Example of increasing prediction over time with genetic features population frequency and GuRu score"/>
+
 
 ## Key Features
 
