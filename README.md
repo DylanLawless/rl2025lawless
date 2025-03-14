@@ -25,7 +25,7 @@ This project implements a reinforcement learning (RL) framework designed to esti
 
 ## Dependencies
 
-- **R** (tested on version X.X.X)
+- **R** R version 4.4.0 (2024-04-24) (Platform: x86_64-apple-darwin20)
 - R packages: `ggplot2`, `dplyr`, `caret`, `pROC`, `patchwork`, `doParallel`, `foreach`, `reshape2`, `knitr`, `gganimate`
 
 ## Usage
