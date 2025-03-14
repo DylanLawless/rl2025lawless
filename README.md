@@ -20,11 +20,10 @@ For an introduction into this topic see:
 
 <img src="figures/gif_genetic_rl_scatter_pact.gif" style="width: 100%;" alt="Example of increasing prediction over time with genetic features population frequency and GuRu score"/>
 
-![figure from Barto et al 2020](https://ieeexplore.ieee.org/mediastore/IEEE/content/media/6221021/9321226/9306925/barto1-3041775-small.gif)
+<img src="figures/barto_2020_ace_ase.jpg" style="width: 100%;" alt="figure from Barto et al 2020"/>
 
 The learning system consists of a single associative search element (ASE) and a single adaptive critic element (ACE).
-**Figure:** Barto, et al. 2020. ASE and ACE configured for pole-balancing task. ACE receives same nonreinforcing input as ASE and uses it to compute an improved or internal reinforcement signal to be used by ASE.
-
+**Figure:** Barto, et al. 2020. ASE and ACE configured for pole-balancing task. ACE receives same nonreinforcing input as ASE and uses it to compute an improved or internal reinforcement signal to be used by ASE. The dashed lines depict the TD error as the reinforcement signal for adjusting the input connection weights of both the ASE and the ACE.
 
 ## Key Features
 
