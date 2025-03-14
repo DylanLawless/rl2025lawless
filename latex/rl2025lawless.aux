@@ -18,14 +18,19 @@
 \AC@reset@newl@bel
 \HyPL@Entry{0<</S/D>>}
 \providecommand\tcolorbox@label[2]{}
-\newacro{rl}[\AC@hyperlink{rl}{RL}]{reinforcement learning}
-\newacro{acmg}[\AC@hyperlink{acmg}{ACMG}]{American College of Medical Genetics and Genomics}
-\newacro{roc}[\AC@hyperlink{roc}{ROC}]{receiver operating characteristic}
-\newacro{auc}[\AC@hyperlink{auc}{AUC}]{area under the curve}
-\newacro{td}[\AC@hyperlink{td}{TD}]{temporal-difference}
+\newacro{ace}[\AC@hyperlink{ace}{ACE}]{associative search element}
+\newacro{ase}[\AC@hyperlink{ase}{ASE}]{adaptive critic element}
 \newacro{af}[\AC@hyperlink{af}{AF}]{allele frequency}
+\newacro{acmg}[\AC@hyperlink{acmg}{ACMG}]{American College of Medical Genetics and Genomics}
+\newacro{auc}[\AC@hyperlink{auc}{AUC}]{area under the curve}
+\newacro{roc}[\AC@hyperlink{roc}{ROC}]{receiver operating characteristic}
 \newacro{maf}[\AC@hyperlink{maf}{MAF}]{minor allele frequency}
 \newacro{qc}[\AC@hyperlink{qc}{QC}]{quality control}
+\newacro{rl}[\AC@hyperlink{rl}{RL}]{reinforcement learning}
+\newacro{td}[\AC@hyperlink{td}{TD}]{temporal-difference}
+\citation{barto1983neuronlike,barto2020looking}
+\citation{barto1983neuronlike}
+\citation{barto2020looking}
 \AC@undonewlabel{acro:rl}
 \newlabel{acro:rl}{{}{2}{Abstract}{section*.2}{}}
 \acronymused{rl}
@@ -39,24 +44,33 @@
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{2}{section.1}}
 \acronymused{rl}
 \acronymused{rl}
+\AC@undonewlabel{acro:ase}
+\newlabel{acro:ase}{{1}{2}{Introduction}{section.1}{}}
+\acronymused{ase}
+\AC@undonewlabel{acro:ace}
+\newlabel{acro:ace}{{1}{2}{Introduction}{section.1}{}}
+\acronymused{ace}
+\acronymused{ase}
 \acronymused{rl}
 \acronymused{rl}
-\@writefile{toc}{\contentsline {section}{\numberline {2}Methods}{3}{section.2}}
+\acronymused{rl}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Methods}{4}{section.2}}
 \acronymused{rl}
 \AC@undonewlabel{acro:td}
-\newlabel{acro:td}{{2}{4}{Methods}{section.2}{}}
+\newlabel{acro:td}{{2}{5}{Methods}{section.2}{}}
 \acronymused{td}
 \acronymused{td}
 \acronymused{roc}
 \acronymused{auc}
 \acronymused{rl}
-\@writefile{toc}{\contentsline {section}{\numberline {3}Results}{4}{section.3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Data representation}{4}{subsection.3.1}}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Data Distributions Across Noise Levels. This figure presents the overlaid distributions of GuRu Score, Population Frequency, Gene Number, and ClinVar Pathogenicity for noise levels 0.1, 0.2, and 0.3.}}{5}{figure.1}}
-\newlabel{fig:data_dist}{{1}{5}{Data Distributions Across Noise Levels. This figure presents the overlaid distributions of GuRu Score, Population Frequency, Gene Number, and ClinVar Pathogenicity for noise levels 0.1, 0.2, and 0.3}{figure.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Correlation and Covariance Matrices Across Noise Levels. The figure displays the correlation (left) and covariance (right) matrices for the known variants, illustrating the relationships between \emph  {Guru Score}, \emph  {Pop Freq}, \emph  {Gene}, and \emph  {Pathogenicity} at various noise levels.}}{6}{figure.2}}
-\newlabel{fig:data_matrices}{{2}{6}{Correlation and Covariance Matrices Across Noise Levels. The figure displays the correlation (left) and covariance (right) matrices for the known variants, illustrating the relationships between \emph {Guru Score}, \emph {Pop Freq}, \emph {Gene}, and \emph {Pathogenicity} at various noise levels}{figure.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Performance Evaluation}{7}{subsection.3.2}}
+\acronymused{rl}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Results}{6}{section.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Data representation}{6}{subsection.3.1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Data Distributions Across Noise Levels. This figure presents the overlaid distributions of GuRu Score, Population Frequency, Gene Number, and ClinVar Pathogenicity for noise levels 0.1, 0.2, and 0.3.}}{7}{figure.1}}
+\newlabel{fig:data_dist}{{1}{7}{Data Distributions Across Noise Levels. This figure presents the overlaid distributions of GuRu Score, Population Frequency, Gene Number, and ClinVar Pathogenicity for noise levels 0.1, 0.2, and 0.3}{figure.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Correlation and Covariance Matrices Across Noise Levels. The figure displays the correlation (left) and covariance (right) matrices for the known variants, illustrating the relationships between \emph  {Guru Score}, \emph  {Pop Freq}, \emph  {Gene}, and \emph  {Pathogenicity} at various noise levels.}}{8}{figure.2}}
+\newlabel{fig:data_matrices}{{2}{8}{Correlation and Covariance Matrices Across Noise Levels. The figure displays the correlation (left) and covariance (right) matrices for the known variants, illustrating the relationships between \emph {Guru Score}, \emph {Pop Freq}, \emph {Gene}, and \emph {Pathogenicity} at various noise levels}{figure.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Performance Evaluation}{9}{subsection.3.2}}
 \acronymused{rl}
 \acronymused{td}
 \acronymused{roc}
@@ -68,24 +82,24 @@
 \acronymused{auc}
 \acronymused{auc}
 \acronymused{rl}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Average Reward per Epoch. This plot illustrates the evolution of the average reward during training, highlighting the model's improving performance across different parameter settings and noise levels.}}{8}{figure.3}}
-\newlabel{fig:epoch_reward}{{3}{8}{Average Reward per Epoch. This plot illustrates the evolution of the average reward during training, highlighting the model's improving performance across different parameter settings and noise levels}{figure.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Average Temporal-Difference (TD) Error per Epoch. This figure displays the convergence behaviour of the learning algorithm, with decreasing \ac {td} error over successive epochs indicating stabilisation of the value estimates.}}{9}{figure.4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Average Reward per Epoch. This plot illustrates the evolution of the average reward during training, highlighting the model's improving performance across different parameter settings and noise levels.}}{10}{figure.3}}
+\newlabel{fig:epoch_reward}{{3}{10}{Average Reward per Epoch. This plot illustrates the evolution of the average reward during training, highlighting the model's improving performance across different parameter settings and noise levels}{figure.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Average Temporal-Difference (TD) Error per Epoch. This figure displays the convergence behaviour of the learning algorithm, with decreasing \ac {td} error over successive epochs indicating stabilisation of the value estimates.}}{11}{figure.4}}
 \acronymused{td}
-\newlabel{fig:epoch_td}{{4}{9}{Average Temporal-Difference (TD) Error per Epoch. This figure displays the convergence behaviour of the learning algorithm, with decreasing \ac {td} error over successive epochs indicating stabilisation of the value estimates}{figure.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Cumulative Average Reward over Training Samples. The learning curve reflects the continuous improvement in model performance throughout training.}}{10}{figure.5}}
-\newlabel{fig:learning}{{5}{10}{Cumulative Average Reward over Training Samples. The learning curve reflects the continuous improvement in model performance throughout training}{figure.5}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Receiver Operating Characteristic (ROC) Curves by Parameter Combination. These curves illustrate the trade-off between the true positive and false positive rates, demonstrating high discrimination ability under certain parameter settings.}}{11}{figure.6}}
-\newlabel{fig:roc_curve}{{6}{11}{Receiver Operating Characteristic (ROC) Curves by Parameter Combination. These curves illustrate the trade-off between the true positive and false positive rates, demonstrating high discrimination ability under certain parameter settings}{figure.6}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces \ac {auc} Heatmap. This heatmap summarises the area under the \ac {roc} curve (\ac {auc}) as a function of the actor ($\alpha $) and critic ($\beta $) learning rates, faceted by noise level. Several combinations achieve \ac {auc} values exceeding 0.8, indicating robust classification performance.}}{12}{figure.7}}
+\newlabel{fig:epoch_td}{{4}{11}{Average Temporal-Difference (TD) Error per Epoch. This figure displays the convergence behaviour of the learning algorithm, with decreasing \ac {td} error over successive epochs indicating stabilisation of the value estimates}{figure.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Cumulative Average Reward over Training Samples. The learning curve reflects the continuous improvement in model performance throughout training.}}{12}{figure.5}}
+\newlabel{fig:learning}{{5}{12}{Cumulative Average Reward over Training Samples. The learning curve reflects the continuous improvement in model performance throughout training}{figure.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Receiver Operating Characteristic (ROC) Curves by Parameter Combination. These curves illustrate the trade-off between the true positive and false positive rates, demonstrating high discrimination ability under certain parameter settings.}}{13}{figure.6}}
+\newlabel{fig:roc_curve}{{6}{13}{Receiver Operating Characteristic (ROC) Curves by Parameter Combination. These curves illustrate the trade-off between the true positive and false positive rates, demonstrating high discrimination ability under certain parameter settings}{figure.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces \ac {auc} Heatmap. This heatmap summarises the area under the \ac {roc} curve (\ac {auc}) as a function of the actor ($\alpha $) and critic ($\beta $) learning rates, faceted by noise level. Several combinations achieve \ac {auc} values exceeding 0.8, indicating robust classification performance.}}{14}{figure.7}}
 \acronymused{auc}
 \acronymused{roc}
 \acronymused{auc}
 \acronymused{auc}
-\newlabel{fig:auc}{{7}{12}{\ac {auc} Heatmap. This heatmap summarises the area under the \ac {roc} curve (\ac {auc}) as a function of the actor ($\alpha $) and critic ($\beta $) learning rates, faceted by noise level. Several combinations achieve \ac {auc} values exceeding 0.8, indicating robust classification performance}{figure.7}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Calibration Plot. This plot compares the mean predicted probabilities to the observed proportions of pathogenic variants, showing that the predicted probabilities are well-calibrated across various parameter combinations.}}{12}{figure.8}}
-\newlabel{fig:calibration}{{8}{12}{Calibration Plot. This plot compares the mean predicted probabilities to the observed proportions of pathogenic variants, showing that the predicted probabilities are well-calibrated across various parameter combinations}{figure.8}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Discussion}{13}{section.4}}
+\newlabel{fig:auc}{{7}{14}{\ac {auc} Heatmap. This heatmap summarises the area under the \ac {roc} curve (\ac {auc}) as a function of the actor ($\alpha $) and critic ($\beta $) learning rates, faceted by noise level. Several combinations achieve \ac {auc} values exceeding 0.8, indicating robust classification performance}{figure.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Calibration Plot. This plot compares the mean predicted probabilities to the observed proportions of pathogenic variants, showing that the predicted probabilities are well-calibrated across various parameter combinations.}}{14}{figure.8}}
+\newlabel{fig:calibration}{{8}{14}{Calibration Plot. This plot compares the mean predicted probabilities to the observed proportions of pathogenic variants, showing that the predicted probabilities are well-calibrated across various parameter combinations}{figure.8}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Discussion}{15}{section.4}}
 \acronymused{rl}
 \acronymused{rl}
 \acronymused{rl}
@@ -96,14 +110,16 @@
 \acronymused{auc}
 \acronymused{rl}
 \acronymused{rl}
+\acronymused{rl}
+\acronymused{rl}
+\acronymused{rl}
+\acronymused{rl}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusion}{16}{section.5}}
+\acronymused{rl}
+\acronymused{rl}
+\acronymused{auc}
 \acronymused{rl}
 \bibstyle{unsrtnat}
 \bibdata{references}
-\acronymused{rl}
-\acronymused{rl}
-\acronymused{rl}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusion}{14}{section.5}}
-\acronymused{rl}
-\acronymused{rl}
-\acronymused{auc}
-\acronymused{rl}
+\bibcite{barto1983neuronlike}{{1}{1983}{{Barto et~al.}}{{Barto, Sutton, and Anderson}}}
+\bibcite{barto2020looking}{{2}{2020}{{Barto et~al.}}{{Barto, Sutton, and Anderson}}}

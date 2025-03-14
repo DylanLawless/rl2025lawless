@@ -1,14 +1,16 @@
 # RL2025Lawless: An Actor-Critic Reinforcement Learning Framework for Variant Evidence Interpretation
 
+**TL;DR:** We use an actor–critic reinforcement learning method that uses genomic metrics (e.g., the GuRu score, variant/gene risk priors, and population frequency) to learn and estimate the probability of observing disease-associated variants by updating weights via the TD error \(\delta(t)=r(t)+\gamma\,p(t)-p(t-1)\), thereby integrating cumulative evidence in a Bayesian context rather than directly predicting pathogenicity.
+
 ## Overview
 
 This project implements a reinforcement learning (RL) framework designed to estimate the probability of observing genetic variants in disease. Instead of directly predicting variant pathogenicity, the framework quantifies the cumulative evidence supporting a variant’s clinical observability within a Bayesian context. The approach integrates established genomic metrics—including the GuRu score (formerly known as the ACMGuru score), gene risk priors, and population frequency—to learn which evidence correctly supports known variant labels. This adaptive learning step is intended to form the basis for subsequent Bayesian integration, yielding nuanced probability estimates for variant-disease associations. We built this base model by first replicating the cart-balancing pole problem from Sutton and Barto in R, followed by the implementation for genetics.
 
 For an introduction into this topic see:
 
-* Reinforcement Learning: An Introduction. Richard S. Sutton and Andrew G. Barto, Second Edition MIT Press, Cambridge, MA, 2018. <http://incompleteideas.net/book/RLbook2020.pdf#page=78>
+* **THIS ONE IF YOU HAVE LOTS OF TIME** Reinforcement Learning: An Introduction. Richard S. Sutton and Andrew G. Barto, Second Edition MIT Press, Cambridge, MA, 2018. <http://incompleteideas.net/book/RLbook2020.pdf#page=78>
 * A. G. Barto, R. S. Sutton and C. W. Anderson, "Neuronlike adaptive elements that can solve difficult learning control problems," in IEEE Transactions on Systems, Man, and Cybernetics, vol. SMC-13, no. 5, pp. 834-846, Sept.-Oct. 1983, doi: 10.1109/TSMC.1983.6313077 <https://ieeexplore.ieee.org/document/6313077>
-* A. G. Barto, R. S. Sutton and C. W. Anderson, "Looking Back on the Actor–Critic Architecture," in IEEE Transactions on Systems, Man, and Cybernetics: Systems, vol. 51, no. 1, pp. 40-50, Jan. 2021, doi: 10.1109/TSMC.2020.3041775 <https://ieeexplore.ieee.org/document/9306925>.
+* **THIS ONE IF YOU HAVE NO TIME** A. G. Barto, R. S. Sutton and C. W. Anderson, "Looking Back on the Actor–Critic Architecture," in IEEE Transactions on Systems, Man, and Cybernetics: Systems, vol. 51, no. 1, pp. 40-50, Jan. 2021, doi: 10.1109/TSMC.2020.3041775 <https://ieeexplore.ieee.org/document/9306925>.
 * An example of Classic Control environments can be [read on gymnasium](https://gymnasium.farama.org/environments/classic_control/cart_pole/), the Python-based API standard for reinforcement which came out of OpenAI's Gym.
 
 <table>
@@ -20,7 +22,7 @@ For an introduction into this topic see:
 
 <img src="figures/gif_genetic_rl_scatter_pact.gif" style="width: 100%;" alt="Example of increasing prediction over time with genetic features population frequency and GuRu score"/>
 
-<img src="figures/barto_2020_ace_ase.jpg" style="width: 100%;" alt="figure from Barto et al 2020"/>
+<img src="figures/barto_2020_ace_ase.jpg" style="width: 75%;" alt="figure from Barto et al 2020"/>
 
 The learning system consists of a single associative search element (ASE) and a single adaptive critic element (ACE).
 **Figure:** Barto, et al. 2020. ASE and ACE configured for pole-balancing task. ACE receives same nonreinforcing input as ASE and uses it to compute an improved or internal reinforcement signal to be used by ASE. The dashed lines depict the TD error as the reinforcement signal for adjusting the input connection weights of both the ASE and the ACE.

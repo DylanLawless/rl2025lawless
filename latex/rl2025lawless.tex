@@ -1,4 +1,4 @@
-\input{head.tex}
+ \input{head.tex}
 \usepackage[printonlyused,withpage,nohyperlinks]{acronym}
 \begin{document}
 \newcounter{myboxcounter}
@@ -42,16 +42,20 @@
 % \acro{vqsr}[VQSR]{Variant Quality Score Recalibration}
 % \acro{vsat}[VSAT]{Variant Set Association Test}
 % \acro{wgs}[WGS]{Whole Genome Sequencing}
-\acro{rl}[RL]{reinforcement learning}
-\acro{acmg}[ACMG]{American College of Medical Genetics and Genomics}
-\acro{roc}[ROC]{receiver operating characteristic}
-\acro{auc}[AUC]{area under the curve}
-\acro{td}[TD]{temporal-difference}
+\acro{ace}[ACE]{associative search element}
+\acro{ase}[ASE]{adaptive critic element}
 \acro{af}[AF]{allele frequency}
+\acro{acmg}[ACMG]{American College of Medical Genetics and Genomics}
+\acro{auc}[AUC]{area under the curve}
+\acro{roc}[ROC]{receiver operating characteristic}
 \acro{maf}[MAF]{minor allele frequency}
 \acro{qc}[QC]{quality control}
+\acro{rl}[RL]{reinforcement learning}
+\acro{td}[TD]{temporal-difference}
 \end{acronym}
 
+
+ 
 \vfill
 \noindent Project code: \href{https://github.com/DylanLawless/rl2025lawless}{https://github.com/DylanLawless/rl2025lawless}
 
@@ -69,7 +73,34 @@ Precise interpretation of genetic variants remains a central challenge in precis
 \ac{rl} provides an appealing alternative to traditional supervised methods by utilising evaluative rather than instructive feedback. Instead of explicitly labelled outcomes, \ac{rl} algorithms receive scalar rewards reflecting decision quality, thereby naturally balancing exploration of uncertain genomic space and exploitation of known information. Inspired by the classical $k$-armed bandit problem, our approach adapts an actor-critic algorithm to genomic data, using key features already available clinically -- such as the GuRu score, gene risk categorisation, and population allele frequency -- to classify the probability of a variant being assigned as pathogenic based on the existing evidence.
 This is subtly but importantly distinct form assigning pathogenicity itself, which is a separate task.
 
-In this study, we systematically quantify \ac{rl} performance with evaluation metrics within simulated genomic scenarios, incorporating data imperfections. Our goal is to identify \ac{rl} methodologies and parameter configurations that exhibit robust and accurate predictive capabilities, thus laying the groundwork for subsequent integration into a Bayesian analytical framework aimed at interpreting genetic evidence in clinical diagnostics.
+
+
+
+We recall the actor-critic architecture of the pole-balancing control problem as described by \citet{barto1983neuronlike, barto2020looking}. % Introduce the background and key references.
+In that work, a two-component adaptive system was introduced, comprising an \ac{ase} (associative search element) and an \ac{ace} (adaptive critic element), designed to solve the challenging pole-balancing control problem without any prior knowledge of the system dynamics. The system learns exclusively from sparse, delayed failure signals. Specifically, the \ac{ase} employs a stochastic, reinforcement-based update rule given by
+\[
+w_i(t+1) = w_i(t) + \alpha\, r(t)\, e_i(t),
+\]
+where \(w_i(t)\) denotes the weight of the \(i\)th input connection at time \(t\), \(\alpha\) is the actor’s learning rate, \(r(t)\) is the reinforcement signal provided by the environment at time \(t\), and \(e_i(t)\) is the eligibility trace capturing the recent history of activity for that connection. % This equation governs how the actor updates its weights based on the received reward and the eligibility trace.
+The eligibility trace itself decays over time according to
+\[
+e_i(t+1) = \delta\, e_i(t) + (1-\delta)\, y(t)\, x_i(t),
+\]
+with \(\delta\) representing the decay factor, \(y(t)\) the output of the system at time \(t\), and \(x_i(t)\) the \(i\)th component of the input vector. % This models how past activity influences current weight updates, decaying exponentially over time.
+Meanwhile, the critic's weight for the \(i\)th input is denoted by \(v_i(t)\) and is updated via
+\[
+v_i(t+1) = v_i(t) + \beta\,[r(t) + \gamma\, p(t) - p(t-1)]\, x_i(t),
+\]
+where \(\beta\) is the critic’s learning rate, \(\gamma\) is the discount factor determining the influence of future rewards, and \(p(t)\) is the critic's current prediction of the cumulative future reward. This update rule allows the critic to refine its predictions of long-term rewards by comparing the current prediction with the observed reinforcement.
+
+The architecture addresses the credit-assignment problem by enabling the system to learn which actions contribute to success or failure in a complex, uncertain environment. % the credit-assignment problem was a key challenge that was thus solved in reinforcement learning.
+In our study, we extend this actor-critic framework to a genomic setting by integrating established genomic metrics (e.g., the GuRu score, variant/gene risk priors, and population frequency). Instead of directly predicting variant pathogenicity, our \ac{rl} method estimates the probability of observing disease-associated variants by updating weights via the temporal-difference (TD) error,
+\[
+\delta(t)=r(t)+\gamma\, p(t)-p(t-1).
+\]
+This approach quantifies the cumulative evidence that supports a variant’s clinical observability within a Bayesian context. 
+
+We systematically quantify the performance of our actor–critic \ac{rl} method using simulated genomic scenarios that incorporate data imperfections such as label noise. Our goal is to identify RL methodologies and optimal parameter configurations that deliver robust, accurate predictive capabilities. These findings will form the foundation for integrating our \ac{rl} framework into a broader Bayesian analytical approach for interpreting genetic evidence in clinical diagnostics.
 
 \section{Methods}  
 Our investigation employed a synthetic dataset designed to mimic the characteristics of genetic variant data. The dataset comprised 2,000 variants, with 50\% of the entries containing known pathogenicity labels and the remaining 50\% left unlabelled for prediction purposes. Variants were generated to reflect realistic genomic scenarios by incorporating features such as the GuRu score, gene number, and population frequency. 
@@ -88,6 +119,21 @@ To improve computational efficiency and allow extensive hyperparameter evaluatio
 
 Synthetic data were generated according to the specified stratification and noise levels, and the \ac{rl} model was trained on a randomly partitioned training set for each combination of parameters. Performance on a held-out test set was evaluated and visualised.
 Additionally, we generated visualisations of feature distributions, correlation matrices, and covariance matrices across noise levels, providing comprehensive diagnostic insights into the synthetic dataset’s structure and variability.
+
+In our actor-critic \ac{rl} system, the key variables are defined as follows. The actor’s weight for the \(i\)th connection at time \(t\) is denoted by \(w_i(t)\) and is updated according to
+\[
+w_i(t+1) = w_i(t) + \alpha\, r(t)\, e_i(t),
+\]
+where \(\alpha\) is the actor’s learning rate, \(r(t)\) is the reinforcement (or reward) signal provided by the environment at time \(t\), and \(e_i(t)\) is the eligibility trace for that connection. The eligibility trace \(e_i(t)\) captures the recent history of activity on the \(i\)th connection and decays over time following
+\[
+e_i(t+1) = \delta\, e_i(t) + (1-\delta)\, y(t)\, x_i(t),
+\]
+with \(\delta\) representing the decay factor, \(y(t)\) the output of the system at time \(t\), and \(x_i(t)\) the \(i\)th component of the input vector. Meanwhile, the critic’s weight for the \(i\)th input is denoted by \(v_i(t)\) and is updated by
+\[
+v_i(t+1) = v_i(t) + \beta\,[r(t) + \gamma\, p(t) - p(t-1)]\, x_i(t),
+\]
+where \(\beta\) is the critic’s learning rate, \(\gamma\) is the discount factor that determines the influence of future rewards, and \(p(t)\) is the critic’s prediction of the cumulative future reward at time \(t\). This architecture, by employing these update rules, addresses the credit-assignment problem by learning which actions under uncertain, delayed feedback contribute to success or failure.
+
 
 \section{Results}
 
@@ -194,7 +240,7 @@ Ultimately, this incremental methodological development has implications for bro
 \section{Conclusion}
 In this study, we have developed an actor-critic \ac{rl} ramework that uses the GuRu score, variant/gene risk categorisation, and population frequency to estimate the probability of observing a variant in disease, rather than directly classifying its pathogenicity. A central contribution of our work is the demonstration that \ac{rl} can learn to discern which evidence supports known variant labels, thereby serving as a crucial precursor to a broader Bayesian classification framework. Our evaluations indicate that the model achieves robust predictive performance even under varying noise conditions, as evidenced by reasonable baseline \ac{auc} values, well-calibrated probability estimates, and converging learning curves. These findings pave the way for future integration of \ac{rl} with Bayesian inference in clinical genomics, ultimately enhancing the accuracy and genetic variant interpretation and improving personalized healthcare outcomes.
 
-% \clearpage
+\clearpage
 \bibliographystyle{unsrtnat}
 \bibliography{references}  
 
